@@ -1,257 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hana Emad | Portfolio</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hana Emad | Cybersecurity & Web Developer Portfolio</title>
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-50 text-gray-800 antialiased">
-    <!-- HEADER -->
-    <header class="max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
-      <div>
-        <h1 class="text-2xl font-extrabold">Hana Emad</h1>
-        <p class="text-sm text-gray-500">Cybersecurity enthusiast & Freelance Web Developer</p>
-      </div>
-      <nav class="space-x-4 text-sm hidden md:block">
-        <a href="#about" class="hover:underline">About</a>
-        <a href="#skills" class="hover:underline">Skills</a>
-        <a href="#projects" class="hover:underline">Projects</a>
-        <a href="#experience" class="hover:underline">Experience</a>
-        <a href="#contact" class="hover:underline">Contact</a>
-      </nav>
-    </header>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Configure Tailwind to use 'Inter' font and custom colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0D9488', // Teal/Cyan for primary actions
+                        'secondary': '#111827', // Darker gray for backgrounds
+                        'accent': '#FDE047', // Yellow for highlights
+                        'text-light': '#D1D5DB', // Light gray text
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.5s ease-out forwards',
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'spin-slow': 'spin 3s linear infinite',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            '0%': { transform: 'translateY(50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for professional look and feel */
+        .section-header {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            opacity: 0; /* Hidden initially for animation */
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
 
-    <main class="max-w-6xl mx-auto px-6">
-      <!-- HERO -->
-      <section class="bg-white rounded-2xl shadow-md p-8 flex flex-col md:flex-row items-start gap-8">
-        <div class="flex-1">
-          <h2 class="text-3xl md:text-4xl font-bold mb-2">Hi, I’m Hana —</h2>
-          <p class="text-lg text-gray-600 mb-4">
-            A cybersecurity enthusiast and freelance web developer. I design secure, responsive
-            websites and build network solutions with clear documentation and fast delivery.
-          </p>
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 75%;
+            height: 4px;
+            background-color: theme('colors.primary');
+            margin-top: 4px;
+            border-radius: 9999px;
+        }
+        
+        /* Utility to delay and run slide-in animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+        
+        .animate-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-          <div class="flex gap-3">
-            <a
-              href="Hana_Emad_Resume.pdf"
-              class="inline-block bg-slate-900 text-white px-4 py-2 rounded-lg text-sm shadow"
-              download
-            >
-              Download CV
-            </a>
-            <a href="#contact" class="inline-block px-4 py-2 rounded-lg border text-sm">
-              Hire me
-            </a>
-          </div>
+        /* Hero Animation */
+        #hero-text > * {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
 
-          <ul class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-gray-600">
-            <li><strong>Location:</strong> Egypt</li>
-            <li><strong>Email:</strong> hanahanaemad2019@gmail.com</li>
-            <li><strong>Phone:</strong> 01023981981</li>
-            <li><strong>LinkedIn:</strong> hana-emad</li>
-          </ul>
+        #hero-text h1 { animation-delay: 0.2s; }
+        #hero-text p { animation-delay: 0.5s; }
+        #hero-text .cta-group { animation-delay: 0.8s; }
+
+        /* Custom scrollbar styling (optional but professional) */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+    </style>
+</head>
+
+<body class="bg-secondary text-text-light min-h-screen">
+
+    <!-- Navigation Bar -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-secondary bg-opacity-95 shadow-lg backdrop-blur-sm transition-shadow duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Name -->
+                <a href="#" class="flex-shrink-0 text-xl font-bold text-primary tracking-wider">
+                    HANA EMAD
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="nav-link text-text-light hover:text-primary transition duration-150 p-2 rounded-lg">Home</a>
+                        <a href="#about" class="nav-link text-text-light hover:text-primary transition duration-150 p-2 rounded-lg">About</a>
+                        <a href="#skills" class="nav-link text-text-light hover:text-primary transition duration-150 p-2 rounded-lg">Skills</a>
+                        <a href="#projects" class="nav-link text-text-light hover:text-primary transition duration-150 p-2 rounded-lg">Projects</a>
+                        <a href="#certs" class="nav-link text-text-light hover:text-primary transition duration-150 p-2 rounded-lg">Certifications</a>
+                        <a href="#contact" class="nav-link text-text-light hover:text-primary transition duration-150 p-2 rounded-lg">Contact</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-text-light hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-secondary focus:ring-primary" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <aside class="w-full md:w-64 bg-gray-50 rounded-lg p-4 border">
-          <h3 class="text-sm font-semibold text-gray-700 mb-2">Quick facts</h3>
-          <dl class="text-sm text-gray-600 space-y-2">
-            <div>
-              <dt class="font-medium">Education</dt>
-              <dd>BA Computer Science — Sadat Academy (2023–2027)</dd>
+        <!-- Mobile Menu (Hidden) -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Home</a>
+                <a href="#about" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-text-light hover:bg-gray-700">About</a>
+                <a href="#skills" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-text-light hover:bg-gray-700">Skills</a>
+                <a href="#projects" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-text-light hover:bg-gray-700">Projects</a>
+                <a href="#certs" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-text-light hover:bg-gray-700">Certifications</a>
+                <a href="#contact" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-text-light hover:bg-gray-700">Contact</a>
             </div>
-            <div>
-              <dt class="font-medium">Certifications</dt>
-              <dd>CCNA (2025), AWS Cloud Fundamentals (2025)</dd>
-            </div>
-            <div>
-              <dt class="font-medium">Availability</dt>
-              <dd>Freelance — Available for small network & frontend projects</dd>
-            </div>
-          </dl>
-        </aside>
-      </section>
-
-      <!-- ABOUT -->
-      <section id="about" class="mt-8">
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="md:col-span-2 bg-white rounded-2xl shadow p-6">
-            <h3 class="text-xl font-semibold mb-3">About me</h3>
-            <p class="text-gray-600 leading-relaxed">
-              I blend creativity and logic — designing interfaces with clean UIs and building
-              secure networks and systems. My background mixes front-end web development (React,
-              Bootstrap, responsive design) with hands-on networking and cybersecurity labs
-              (Cisco Packet Tracer, firewall basics, VLANs). I enjoy turning complex technical
-              topics into simple, maintainable solutions.
-            </p>
-
-            <h4 class="mt-4 font-medium">What I offer</h4>
-            <ul class="list-disc ml-5 mt-2 text-gray-600">
-              <li>Responsive website builds & UI prototyping</li>
-              <li>Small-office network design and IP planning</li>
-              <li>Security-focused development and basic hardening steps</li>
-              <li>Clear documentation and handover guides</li>
-            </ul>
-          </div>
-
-          <div class="bg-white rounded-2xl shadow p-6">
-            <h4 class="font-semibold mb-2">Tools & platforms</h4>
-            <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1 rounded-full border text-sm">GitHub</span>
-              <span class="px-3 py-1 rounded-full border text-sm">VS Code</span>
-              <span class="px-3 py-1 rounded-full border text-sm">Canva</span>
-              <span class="px-3 py-1 rounded-full border text-sm">Cisco Packet Tracer</span>
-            </div>
-
-            <h4 class="font-semibold mt-4 mb-2">Preferred workflow</h4>
-            <p class="text-sm text-gray-600">Figma → Design → React/Bootstrap → Test → Deploy</p>
-          </div>
         </div>
-      </section>
+    </nav>
 
-      <!-- SKILLS -->
-      <section id="skills" class="mt-8 bg-white rounded-2xl shadow p-6">
-        <h3 class="text-xl font-semibold mb-4">Skills</h3>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div>
-            <h4 class="font-medium mb-2">Web Development</h4>
-            <ul class="text-gray-600 list-disc ml-5">
-              <li>HTML5</li>
-              <li>CSS3</li>
-              <li>JavaScript</li>
-              <li>React.js</li>
-              <li>Bootstrap</li>
-              <li>Figma</li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-medium mb-2">Cybersecurity & Networking</h4>
-            <ul class="text-gray-600 list-disc ml-5">
-              <li>IP Addressing & Subnetting</li>
-              <li>Routing & Switching</li>
-              <li>Firewalls & ACLs</li>
-              <li>Packet Tracer</li>
-              <li>AWS Cloud Fundamentals</li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-medium mb-2">Other</h4>
-            <ul class="text-gray-600 list-disc ml-5">
-              <li>GitHub</li>
-              <li>VS Code</li>
-              <li>Canva</li>
-              <li>Cisco Packet Tracer</li>
-            </ul>
-          </div>
-        </div>
-      </section>
 
-      <!-- PROJECTS -->
-      <section id="projects" class="mt-8">
-        <h3 class="text-xl font-semibold mb-4">Selected projects</h3>
-        <div class="grid md:grid-cols-3 gap-6">
-          <article class="bg-white rounded-2xl shadow p-4">
-            <div class="h-36 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 mb-3">
-              <span class="text-sm">Screenshot / Illustration</span>
+    <main class="max-w-7xl mx-auto">
+        <!-- 1. HERO/HOME Section -->
+        <section id="home" class="pt-24 pb-12 sm:pt-32 sm:pb-20 px-6 lg:px-8 min-h-[85vh] flex items-center">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div id="hero-text" class="space-y-6">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                        Hi, I'm <span class="text-primary">Hana Emad</span>
+                    </h1>
+                    <p class="text-xl sm:text-2xl text-text-light font-light">
+                        Cybersecurity Enthusiast & Freelance Web Developer
+                    </p>
+                    <p class="text-gray-400 max-w-lg">
+                        Blending <span class="text-accent font-medium">creativity and logic</span> to design secure, high-quality web experiences and protect systems from threats. Actively pursuing advanced knowledge in networking (CCNA) and cloud security (AWS).
+                    </p>
+                    <div class="cta-group flex space-x-4 pt-4">
+                        <a href="#projects" class="group relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-primary to-green-400 group-hover:from-primary group-hover:to-green-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-secondary rounded-md group-hover:bg-opacity-0 text-text-light hover:text-white flex items-center space-x-2">
+                                <i data-lucide="eye" class="w-5 h-5"></i>
+                                <span>View Projects</span>
+                            </span>
+                        </a>
+                        <!-- Direct link to CV PDF file -->
+                        <a href="uploaded:cv hana.pdf" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-text-light bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-150 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            <i data-lucide="download" class="w-5 h-5 mr-2"></i>
+                            Download CV
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Profile Image -->
+                <div class="flex justify-center md:justify-end animate-on-scroll" data-delay="300">
+                    <div class="relative w-72 h-72 sm:w-96 sm:h-96">
+                        <div class="absolute inset-0 bg-primary opacity-20 rounded-full animate-spin-slow"></div>
+                        <div class="absolute inset-2 bg-secondary rounded-full overflow-hidden border-4 border-primary/50 flex items-center justify-center">
+                            <!-- Image URL for Hana Emad -->
+                            <img src="uploaded:A6ED01A6-0B64-4D24-ADB1-C370A80FEA62.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FDE047?text=Hana';" alt="Hana Emad Profile Picture" class="w-full h-full object-cover p-2 rounded-full transform hover:scale-105 transition duration-500">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h4 class="font-semibold">Bakery Website</h4>
-            <p class="text-sm text-gray-600 my-2">Responsive frontend built with HTML/CSS and Bootstrap — product pages, menu, and contact form.</p>
-            <div class="flex flex-wrap gap-2 mb-3">
-              <span class="text-xs px-2 py-1 rounded-full border">HTML</span>
-              <span class="text-xs px-2 py-1 rounded-full border">Bootstrap</span>
-              <span class="text-xs px-2 py-1 rounded-full border">Responsive</span>
-            </div>
-            <a href="#" class="text-sm underline">View project</a>
-          </article>
+        </section>
 
-          <article class="bg-white rounded-2xl shadow p-4">
-            <div class="h-36 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 mb-3">
-              <span class="text-sm">Screenshot / Illustration</span>
+        <!-- 2. ABOUT Section -->
+        <section id="about" class="py-20 px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white section-header" data-delay="0">About Me</h2>
+            <div class="grid md:grid-cols-3 gap-8 mt-8">
+                <div class="md:col-span-2 space-y-6 text-lg text-gray-400 animate-on-scroll" data-delay="100">
+                    <p>I am a 3rd-year Computer Science student at Sadat Academy for Management Sciences, specializing in **cybersecurity**. My academic journey is built on a strong GPA of 3.74 and a proactive approach to continuous learning.</p>
+                    <p>My dual focus is on securing digital environments and crafting beautiful, functional web applications. I have experience building responsive websites using **HTML, CSS, Bootstrap, and React.js**, complemented by formal training in UI/UX design via Figma.</p>
+                    <p>I am actively expanding my knowledge base in network infrastructure and security, as evidenced by my ongoing pursuit of the **Cisco CCNA** and completion of the **AWS Academy Cloud Foundations** certification. Currently, I am also enrolled in the **Digital Egypt Pioneers Initiative (DEPI) - Fortinet Cybersecurity Engineer Track**.</p>
+                    <p>My goal is to transition into a full-time cybersecurity professional, leveraging my web development background to build defense-in-depth solutions.</p>
+                </div>
+                
+                <!-- Education Card -->
+                <div class="md:col-span-1 p-6 bg-gray-800 rounded-xl shadow-2xl animate-on-scroll" data-delay="200">
+                    <h3 class="text-xl font-semibold text-primary mb-4 flex items-center"><i data-lucide="graduation-cap" class="w-5 h-5 mr-2"></i> Education</h3>
+                    <ul class="space-y-4 text-sm text-gray-300">
+                        <li>
+                            <p class="font-medium text-white">BA of Computer Science</p>
+                            <p>Sadat Academy for Management Sciences</p>
+                            <p class="text-xs text-gray-400">2023 - 2027 | GPA: 3.74</p>
+                        </li>
+                        <li>
+                            <p class="font-medium text-white">Fortinet Cybersecurity Engineer Track</p>
+                            <p>Digital Egypt Pioneers Initiative (DEPI)</p>
+                            <p class="text-xs text-gray-400">June - Dec 2025</p>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <h4 class="font-semibold">MovieScope Website</h4>
-            <p class="text-sm text-gray-600 my-2">Interactive UI prototype using React for browsing and filtering movies.</p>
-            <div class="flex flex-wrap gap-2 mb-3">
-              <span class="text-xs px-2 py-1 rounded-full border">React</span>
-              <span class="text-xs px-2 py-1 rounded-full border">JavaScript</span>
-              <span class="text-xs px-2 py-1 rounded-full border">UI</span>
+        </section>
+
+        <!-- 3. SKILLS Section -->
+        <section id="skills" class="py-20 px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white section-header" data-delay="0">Technical Skills</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <!-- Skill Category 1: Cybersecurity & Networking -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl space-y-4 animate-on-scroll" data-delay="100">
+                    <h3 class="text-xl font-semibold text-accent flex items-center"><i data-lucide="shield" class="w-6 h-6 mr-2"></i> Cybersecurity & Networking</h3>
+                    <ul class="text-gray-300 list-disc pl-5 space-y-2 text-sm">
+                        <li>IP addressing, Subnetting, Routing & Switching (CCNA Basics)</li>
+                        <li>VLANs, Trunking, and secure network segmentation</li>
+                        <li>Cloud Security Fundamentals (AWS)</li>
+                        <li>Firewalls and Access Control Lists (ACLs)</li>
+                        <li>Cisco Packet Tracer simulation and lab building</li>
+                    </ul>
+                </div>
+
+                <!-- Skill Category 2: Web Development & Design -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl space-y-4 animate-on-scroll" data-delay="200">
+                    <h3 class="text-xl font-semibold text-accent flex items-center"><i data-lucide="code" class="w-6 h-6 mr-2"></i> Web Development & Design</h3>
+                    <ul class="text-gray-300 list-disc pl-5 space-y-2 text-sm">
+                        <li>**Frontend:** HTML5, CSS3, JavaScript</li>
+                        <li>**Frameworks:** React.js, Bootstrap, Flexbox</li>
+                        <li>Responsive Design principles</li>
+                        <li>UI/UX Design and Prototyping (Figma)</li>
+                        <li>Git and GitHub version control</li>
+                    </ul>
+                </div>
+
+                <!-- Skill Category 3: Tools & Other Languages -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl space-y-4 animate-on-scroll" data-delay="300">
+                    <h3 class="text-xl font-semibold text-accent flex items-center"><i data-lucide="tool" class="w-6 h-6 mr-2"></i> Tools & Languages</h3>
+                    <ul class="text-gray-300 list-disc pl-5 space-y-2 text-sm">
+                        <li>Programming Language: C++</li>
+                        <li>IDE/Tools: Visual Studio Code, Cisco Packet Tracer</li>
+                        <li>Design Tools: Canva</li>
+                        <li>Productivity: Microsoft Office Suite</li>
+                        <li>Languages: English / Arabic (Native)</li>
+                    </ul>
+                </div>
             </div>
-            <a href="#" class="text-sm underline">View project</a>
-          </article>
+        </section>
 
-          <article class="bg-white rounded-2xl shadow p-4">
-            <div class="h-36 rounded-md bg-gray-100 flex items-center justify-center text-gray-400 mb-3">
-              <span class="text-sm">Screenshot / Illustration</span>
+        <!-- 4. PROJECTS Section -->
+        <section id="projects" class="py-20 px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white section-header" data-delay="0">Featured Projects</h2>
+            <div class="mt-8 grid lg:grid-cols-2 gap-8">
+                
+                <!-- Project 1: MovieScope Website -->
+                <div class="bg-gray-800 rounded-xl shadow-2xl overflow-hidden animate-on-scroll" data-delay="100">
+                    <img src="uploaded:Screenshot 2025-09-25 223609.png" onerror="this.onerror=null; this.src='https://placehold.co/600x350/2d3748/ffffff?text=MovieScope+Project';" alt="MovieScope Project Screenshot" class="w-full h-56 object-cover hover:scale-105 transition duration-500">
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-2xl font-semibold text-white">MovieScope - Discovery Website</h3>
+                        <p class="text-primary text-sm font-medium">HTML5 | CSS3 | Bootstrap | Flexbox</p>
+                        <p class="text-gray-400">A responsive web platform showcasing movies, series, and weekly trends. Features include a sticky navbar, Bootstrap carousel, interactive movie cards with hover effects, and a clean, user-friendly UI.</p>
+                        <div class="flex space-x-4">
+                            <!-- Placeholder link for live demo/repo -->
+                            <a href="#" target="_blank" class="text-primary hover:text-accent font-medium flex items-center transition duration-150">
+                                <i data-lucide="github" class="w-4 h-4 mr-1"></i> View Code (Repo Link)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Bakery Website -->
+                <div class="bg-gray-800 rounded-xl shadow-2xl overflow-hidden animate-on-scroll" data-delay="200">
+                    <img src="uploaded:Screenshot 2025-09-25 225915.png" onerror="this.onerror=null; this.src='https://placehold.co/600x350/2d3748/ffffff?text=Bakery+Project';" alt="Bakery Project Screenshot" class="w-full h-56 object-cover hover:scale-105 transition duration-500">
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-2xl font-semibold text-white">Bakery Website (Practice)</h3>
+                        <p class="text-primary text-sm font-medium">HTML | CSS | Google Maps</p>
+                        <p class="text-gray-400">A complete, aesthetic website layout for a fictional family bakery. This project focused on solid HTML and CSS structure and integrating external services like Google Maps for location display.</p>
+                        <div class="flex space-x-4">
+                            <!-- Placeholder link for live demo/repo -->
+                            <a href="#" target="_blank" class="text-primary hover:text-accent font-medium flex items-center transition duration-150">
+                                <i data-lucide="github" class="w-4 h-4 mr-1"></i> View Code (Repo Link)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Network Projects Card (Summary) -->
+                <div class="lg:col-span-2 bg-gray-900 rounded-xl shadow-2xl p-8 animate-on-scroll" data-delay="300">
+                    <h3 class="text-2xl font-semibold text-accent mb-4 flex items-center"><i data-lucide="workflow" class="w-6 h-6 mr-2"></i> Network Topology Projects (Packet Tracer)</h3>
+                    <p class="text-gray-400 mb-4">Hands-on experience in network design and security, providing freelance support for small office networks.</p>
+                    <div class="grid sm:grid-cols-2 gap-4 text-sm text-gray-300">
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Design & Configure small, well-organized topologies.</li>
+                            <li>IP Addressing & Subnetting for device optimization.</li>
+                            <li>Configuration of PCs, Printers, Switches, and Routers.</li>
+                        </ul>
+                        <div class="flex flex-col items-center justify-center">
+                            <a href="uploaded:Hana Emad.pdf" target="_blank" class="text-primary hover:text-accent font-medium flex items-center transition duration-150 p-2 border border-primary rounded-lg">
+                                <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> View Network Diagrams (in PDF)
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h4 class="font-semibold">Network Topology Guide (Sample)</h4>
-            <p class="text-sm text-gray-600 my-2">A clear topology diagram and step-by-step configuration notes for small office networks.</p>
-            <div class="flex flex-wrap gap-2 mb-3">
-              <span class="text-xs px-2 py-1 rounded-full border">Networking</span>
-              <span class="text-xs px-2 py-1 rounded-full border">CCNA</span>
-              <span class="text-xs px-2 py-1 rounded-full border">Documentation</span>
+        </section>
+
+        <!-- 5. CERTIFICATIONS Section -->
+        <section id="certs" class="py-20 px-6 lg:px-8 bg-gray-900">
+            <h2 class="text-3xl font-bold text-white section-header" data-delay="0">Certifications & Achievements</h2>
+            <div class="mt-8 grid md:grid-cols-3 gap-6">
+
+                <!-- Cert 1: AWS Cloud Foundations -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl flex flex-col items-center text-center animate-on-scroll" data-delay="100">
+                    <img src="uploaded:aws-academy-graduate-aws-academy-cloud-foundations.png" onerror="this.onerror=null; this.src='https://placehold.co/120x120/111827/FDE047?text=AWS';" alt="AWS Cloud Foundations Badge" class="w-24 h-24 mb-4 object-contain">
+                    <h3 class="text-lg font-semibold text-white">AWS Academy Cloud Foundations</h3>
+                    <p class="text-primary text-sm my-1">Issued: May 2025</p>
+                    <p class="text-gray-400 text-xs">Gained knowledge in cloud computing basics, AWS architecture, core services, and fundamental security practices.</p>
+                    <a href="uploaded:AWS_Academy_Graduate___AWS_Academy_Cloud_Foundations_Badge20250514-27-n1vpuu.pdf" target="_blank" class="mt-3 text-sm text-accent hover:underline flex items-center">
+                        <i data-lucide="award" class="w-4 h-4 mr-1"></i> View Certificate
+                    </a>
+                </div>
+
+                <!-- Cert 2: CCNA Introduction to Networks -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl flex flex-col items-center text-center animate-on-scroll" data-delay="200">
+                    <img src="uploaded:ccna-introduction-to-networks.png" onerror="this.onerror=null; this.src='https://placehold.co/120x120/111827/FDE047?text=CCNA';" alt="CCNA Introduction to Networks Badge" class="w-24 h-24 mb-4 object-contain">
+                    <h3 class="text-lg font-semibold text-white">CCNA: Introduction to Networks</h3>
+                    <p class="text-primary text-sm my-1">Issued: Aug 2025</p>
+                    <p class="text-gray-400 text-xs">Completed the first stage of the CCNA curriculum, mastering networking fundamentals, routing, switching, and subnetting.</p>
+                    <a href="uploaded:Screenshot 2025-08-24 001017.png" target="_blank" class="mt-3 text-sm text-accent hover:underline flex items-center">
+                        <i data-lucide="award" class="w-4 h-4 mr-1"></i> View Certificate
+                    </a>
+                </div>
+
+                <!-- Cert 3: Web Development Track -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl flex flex-col items-center text-center animate-on-scroll" data-delay="300">
+                    <img src="https://placehold.co/120x120/111827/FDE047?text=Web+Dev" onerror="this.onerror=null; this.src='https://placehold.co/120x120/111827/FDE047?text=Web+Dev';" alt="Web Development Certificate Placeholder" class="w-24 h-24 mb-4 object-contain">
+                    <h3 class="text-lg font-semibold text-white">Web Development Track</h3>
+                    <p class="text-primary text-sm my-1">Issued: Aug 2025 (Microsoft Student Clubs)</p>
+                    <p class="text-gray-400 text-xs">Practical experience in HTML, CSS, JavaScript, and responsive design, forming a solid front-end foundation.</p>
+                    <a href="uploaded:WhatsApp Image 2025-09-01 at 05.36.00_7d4d37c0.jpg" target="_blank" class="mt-3 text-sm text-accent hover:underline flex items-center">
+                        <i data-lucide="award" class="w-4 h-4 mr-1"></i> View Certificate
+                    </a>
+                </div>
+
             </div>
-            <a href="#" class="text-sm underline">View project</a>
-          </article>
-        </div>
-      </section>
+        </section>
 
-      <!-- EXPERIENCE -->
-      <section id="experience" class="mt-8 bg-white rounded-2xl shadow p-6">
-        <h3 class="text-xl font-semibold mb-4">Experience & Education</h3>
-        <div class="space-y-4">
-          <div>
-            <h4 class="font-medium">Freelance Cybersecurity & Networking Support — 2025 – Present</h4>
-            <p class="text-sm text-gray-600">Providing guidance on network safety, small office topology, and configuration.</p>
-          </div>
+        <!-- 6. CONTACT Section -->
+        <section id="contact" class="py-20 px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white section-header" data-delay="0">Get In Touch</h2>
+            <div class="mt-8 bg-gray-800 p-8 rounded-xl shadow-2xl animate-on-scroll" data-delay="100">
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto text-center mb-8">
+                    Whether you have a project in mind, a networking question, or an opportunity, I'd love to hear from you!
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-center">
+                    <div class="flex items-center space-x-2 text-text-light hover:text-primary transition duration-150">
+                        <i data-lucide="mail" class="w-6 h-6"></i>
+                        <a href="mailto:hanahanaemad2019@gmail.com" class="font-medium">hanahanaemad2019@gmail.com</a>
+                    </div>
+                    <div class="flex items-center space-x-2 text-text-light hover:text-primary transition duration-150">
+                        <i data-lucide="phone" class="w-6 h-6"></i>
+                        <span class="font-medium">01023981981</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-text-light hover:text-primary transition duration-150">
+                        <i data-lucide="github" class="w-6 h-6"></i>
+                        <a href="https://github.com/hana200000" target="_blank" class="font-medium hover:underline">hana200000</a>
+                    </div>
+                </div>
 
-          <div>
-            <h4 class="font-medium">Digital Egypt Pioneers Initiative (DEPI) — Fortinet Track</h4>
-            <p class="text-sm text-gray-600">Hands-on infrastructure & cybersecurity training (Jun/Dec 2025).</p>
-          </div>
-
-          <div>
-            <h4 class="font-medium">BA Computer Science — Sadat Academy (2023 – 2027)</h4>
-            <p class="text-sm text-gray-600">Core foundation in programming, data structures, and systems.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT -->
-      <section id="contact" class="mt-8 bg-white rounded-2xl shadow p-6">
-        <h3 class="text-xl font-semibold mb-4">Let’s work together</h3>
-        <div class="grid md:grid-cols-2 gap-6">
-          <form class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium">Name</label>
-              <input type="text" class="mt-1 block w-full rounded-md border px-3 py-2" />
             </div>
-            <div>
-              <label class="block text-sm font-medium">Email</label>
-              <input type="email" class="mt-1 block w-full rounded-md border px-3 py-2" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium">Message</label>
-              <textarea class="mt-1 block w-full rounded-md border px-3 py-2 h-28"></textarea>
-            </div>
-            <button type="submit" class="px-4 py-2 rounded-lg bg-slate-900 text-white">
-              Send message
-            </button>
-          </form>
-
-          <div class="text-sm text-gray-600">
-            <p class="mb-2">Or reach me directly:</p>
-            <p><strong>Email:</strong> hanahanaemad2019@gmail.com</p>
-            <p><strong>Phone:</strong> 01023981981</p>
-            <p class="mt-3"><strong>LinkedIn:</strong> <span class="underline">hana-emad</span></p>
-            <p class="mt-4 text-xs text-gray-500">Note: The contact form is illustrative. For production, connect it to your backend or use a service like Formspree.</p>
-          </div>
-        </div>
-      </section>
-
-      <footer class="mt-8 py-6 text-center text-sm text-gray-500">© <span id="year"></span> Hana Emad — Built with care</footer>
+        </section>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-gray-900 mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center text-sm text-gray-500">
+            &copy; 2025 Hana Emad. Built with <span class="text-primary">passion</span> and Tailwind CSS.
+        </div>
+    </footer>
+
+
     <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // --- JavaScript for Responsiveness and Animations ---
+
+        // 1. Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true' || false;
+            this.setAttribute('aria-expanded', !isExpanded);
+            menu.classList.toggle('hidden');
+        });
+
+        // 2. Hide mobile menu after clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+                
+                // Only hide if the menu is visible (mobile view)
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+
+        // 3. Scroll Animation Logic
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '0px',
+            threshold: 0.2 // Trigger when 20% of the item is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Item is visible
+                    entry.target.classList.add('animate-visible');
+                    // Add delay if specified
+                    const delay = entry.target.getAttribute('data-delay');
+                    if (delay) {
+                        entry.target.style.transitionDelay = `${delay}ms`;
+                    }
+                    observer.unobserve(entry.target); // Stop observing once animated
+                }
+            });
+        }, observerOptions);
+
+        // Target all elements that should animate on scroll
+        document.querySelectorAll('.animate-on-scroll, .section-header').forEach(el => {
+            observer.observe(el);
+        });
     </script>
-  </body>
+</body>
 </html>
